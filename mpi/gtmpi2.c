@@ -2,9 +2,8 @@
 #include <mpi.h>
 #include <stdio.h>
 #include "gtmpi.h"
-#include <unistd.h>   // for usleep()
-#include <stdlib.h>   // for rand()
-#include <time.h>     // for time()
+#include <unistd.h> 
+#include <time.h>  
 
 
 static int rank, size;
