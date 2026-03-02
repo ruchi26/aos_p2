@@ -16,6 +16,11 @@ static int epoch = 0;
 
 
 void gtmpi_init(int num_processes){
+    
+    if (num_processes < 1) {
+        printf("Invalid number of processes\n");
+        exit(1);
+    }
 
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
