@@ -1,53 +1,66 @@
-#include <assert.h>
 #include <mpi.h>
 #include <omp.h>
 #include "gtmp.h"
-#include "gtmp_combined.h"
 #include "gtmpi.h" 
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <sys/time.h>
 
-static int provided_thread_support = MPI_THREAD_SINGLE;
-static int hybrid_num_threads = 1;
+int main(int argc, char** argv)
+{
+    int totalProcessCount, my_rank;
+    int num_threads, num_iter=1;
 
-// TODO: make a harness file to test and run this one
-
-void gtmp_hybrid_init(int num_threads) {
-    // using MPI with FUNNELED support so that there is only 1 thread that can make MPI calls.
-    MPI_Query_thread(&provided_thread_support);
-    assert(provided_thread_support >= MPI_THREAD_FUNNELED);
-
-    if (num_threads <= 0) {
-        hybrid_num_threads = omp_get_max_threads();
-    } else {
-        hybrid_num_threads = num_threads;
-    }
-    gtmp_init(hybrid_num_threads);
-
-    // passing a dummy value here
-    gtmpi_init(1);
-}
-
-void gtmp_hybrid_barrier(void) {
-    // all threads arrive locally
-    gtmp_barrier();
-
-    // one representative thread per process will then participate in the MPI barrier
-    if (omp_get_thread_num() == 0) {
-        gtmpi_barrier();
+    MPI_Init(&argc, &argv);
+    
+    if (argc < 2){
+        fprintf(stderr, "Usage: ./combined [NUM_THREADS]\n");
+        exit(EXIT_FAILURE);
     }
 
-    // releasing all the rest of the local threads once MPI barrier completes
-    gtmp_barrier();
-}
+    num_threads = strtol(argv[1], NULL, 10);
 
-void gtmp_hybrid_finalize(void) {
+    MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &totalProcessCount);
+    gtmpi_init(totalProcessCount);
 
-    #pragma omp parallel num_threads(hybrid_num_threads)
+    omp_set_dynamic(0);
+    if (omp_get_dynamic())
+        printf("Warning: dynamic adjustment of threads has been set\n");
+
+    omp_set_num_threads(num_threads);
+    
+    gtmp_init(num_threads);
+
+
+    #pragma omp parallel
     {
-        #pragma omp single
-        {
-            gtmp_finalize();
+        int i;
+        for(i = 0; i < num_iter; i++){
+        
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+        double t_enter = tv.tv_sec + tv.tv_usec / 1000000.0;
+        fprintf(stderr, "Thread [%d] before barrier at %.9f\n", omp_get_thread_num(), t_enter);
+        gtmp_barrier();
+        gettimeofday(&tv, NULL);
+        double t_leave = tv.tv_sec + tv.tv_usec / 1000000.0;
+        fprintf(stderr, "Thread [%d] after barrier at %.9f\n", omp_get_thread_num(), t_leave);
         }
     }
 
-    gtmpi_finalize();
+    printf("process %d entering barrier \n", my_rank);
+    fflush(stdout);
+    gtmpi_barrier();
+    printf("process %d left barrier \n", my_rank);
+    fflush(stdout);
+    
+    gtmp_finalize();
+
+    gtmpi_finalize();  
+
+    MPI_Finalize();
+
+    return 0;
 }
