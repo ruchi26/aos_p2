@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <omp.h>
 #include "gtmp.h"
+#include <sys/time.h>
+
+int print_order;
 
 int main(int argc, char** argv)
 {
@@ -24,8 +27,19 @@ int main(int argc, char** argv)
 #pragma omp parallel shared(num_threads)
    {
      int i;
+     struct timeval time_curr_start;
+     struct timeval time_curr_end;
+     if (omp_get_thread_num() == 0) {
+      gettimeofday(&time_curr_start, NULL);
+     }
      for(i = 0; i < num_iter; i++){
        gtmp_barrier();
+       if (omp_get_thread_num() == 0) {
+        gettimeofday(&time_curr_end, NULL);
+        double t_enter = (time_curr_end.tv_sec + time_curr_end.tv_usec / 1000000.0) - (time_curr_start.tv_sec + time_curr_start.tv_usec / 1000000.0);
+        printf("time for barrier %d is %.9f\n", i, t_enter);
+        gettimeofday(&time_curr_start, NULL);
+       }
      }
    }
 
