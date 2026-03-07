@@ -10,7 +10,7 @@
 int main(int argc, char** argv)
 {
     int totalProcessCount, my_rank;
-    int num_threads, num_iter=1;
+    int num_threads, num_iter=100;
 
     MPI_Init(&argc, &argv);
     
@@ -33,29 +33,24 @@ int main(int argc, char** argv)
     
     gtmp_init(num_threads);
 
-
-    #pragma omp parallel
-    {
-        int i;
-        for(i = 0; i < num_iter; i++){
-        
-        struct timeval tv;
-        gettimeofday(&tv, NULL);
-        double t_enter = tv.tv_sec + tv.tv_usec / 1000000.0;
-        fprintf(stderr, "Thread [%d] before barrier at %.9f\n", omp_get_thread_num(), t_enter);
-        gtmp_barrier();
-        gettimeofday(&tv, NULL);
-        double t_leave = tv.tv_sec + tv.tv_usec / 1000000.0;
-        fprintf(stderr, "Thread [%d] after barrier at %.9f\n", omp_get_thread_num(), t_leave);
+    struct timeval time_start;
+    struct timeval time_end;
+    double total_time;
+    for (int j = 0; j < num_iter; j++) {
+        gettimeofday(&time_start, NULL);
+        #pragma omp parallel
+        {
+            int i;
+            for (i = 0; i < num_iter; i++) {
+                gtmp_barrier();
+            }
         }
+        gtmpi_barrier();
+        gettimeofday(&time_end, NULL);
+        total_time = total_time + ((double)(time_end.tv_sec * 1000000) + time_end.tv_usec) - ((double)(time_start.tv_sec * 1000000) + time_start.tv_usec);
     }
 
-    printf("process %d entering barrier \n", my_rank);
-    fflush(stdout);
-    gtmpi_barrier();
-    printf("process %d left barrier \n", my_rank);
-    fflush(stdout);
-    
+    printf("Number of threads %d, number of processes %d, avg. time %.9f\n", num_threads, totalProcessCount, total_time/num_iter);
     gtmp_finalize();
 
     gtmpi_finalize();  
