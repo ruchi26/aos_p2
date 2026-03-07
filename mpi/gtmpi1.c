@@ -11,6 +11,9 @@ static int totalProcessCount;
 static int my_rank;
 static int num_rounds;
 
+// message counters for measurement purposes
+static long msg_send_count = 0, msg_recv_count = 0;
+
 void gtmpi_init(int num_processes){
     if (num_processes < 1) {
         printf("Invalid number of processes\n");
@@ -48,11 +51,20 @@ void gtmpi_barrier(){
         MPI_Sendrecv(&sendbuffer, 1, MPI_INT, send_to, round,
                     &recvbuffer, 1, MPI_INT, recv_from, round,
                     MPI_COMM_WORLD, &status);
+        msg_send_count++;
+        msg_recv_count++;
     }
 
     // double t_leave = MPI_Wtime();
     // fprintf(stderr, "[%d] after barrier at %.6f\n",
     //         my_rank, t_leave);
+}
+
+void gtmpi_get_and_reset_counts(long* sends, long* recvs) {
+    if (sends) *sends = msg_send_count;
+    if (recvs) *recvs = msg_recv_count;
+    msg_send_count = 0;
+    msg_recv_count = 0;
 }
 
 void gtmpi_finalize(){

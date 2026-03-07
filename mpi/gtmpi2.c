@@ -13,6 +13,8 @@ static int num_children;
 static int sense = 1;
 static int epoch = 0;
 
+// message counters for measurement purposes
+static long msg_send_count = 0, msg_recv_count = 0;
 
 void gtmpi_init(int num_processes){
     
@@ -56,18 +58,22 @@ void gtmpi_barrier(){
     for (int i = 0; i < num_children; i++) {
         int receiveBuffer;
         MPI_Recv(&receiveBuffer, 1, MPI_INT, child[i], tag, MPI_COMM_WORLD, &status);
+        msg_recv_count++;
     }
 
     // sending messages to all parents except the root, whose parent is -1
     if (parent != -1) {
         MPI_Send(&msg, 1, MPI_INT, parent, tag, MPI_COMM_WORLD);
+        msg_send_count++;
 
         int receiveBuffer;
         MPI_Recv(&receiveBuffer, 1, MPI_INT, parent, tag, MPI_COMM_WORLD, &status);
+        msg_recv_count++;
     }
 
     for (int i = 0; i < num_children; i++) {
         MPI_Send(&msg, 1, MPI_INT, child[i], tag, MPI_COMM_WORLD);
+        msg_send_count++;
     }
 
     // double t_leave = MPI_Wtime();
@@ -78,6 +84,15 @@ void gtmpi_barrier(){
     epoch++;
 
 }
+
+
+void gtmpi_get_and_reset_counts(long* sends, long* recvs) {
+    if (sends) *sends = msg_send_count;
+    if (recvs) *recvs = msg_recv_count;
+    msg_send_count = 0;
+    msg_recv_count = 0;
+}
+
 
 void gtmpi_finalize(){
 
