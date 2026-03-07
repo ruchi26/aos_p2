@@ -47,7 +47,7 @@ int main(int argc, char** argv)
     if (latency > lat_max) lat_max = latency;
 
     wait_sum += wait_before_barrier;
-    if (wait_before_barrier < wait_min) wait_min = wait_before_barrier;
+    if (wait_before_barrier < wait_min)cd  wait_min = wait_before_barrier;
     if (wait_before_barrier > wait_max) wait_max = wait_before_barrier;
   }
 
