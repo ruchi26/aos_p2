@@ -4,7 +4,7 @@
 You will run jobs on the COC-ICE PACE cluster. All enrolled students must be able to access the cluster via ssh and use GT credentials. You **must** be on VPN or campus network for this to work. You can login to PACE using the following command (replace username):
 
 ```bash
-ssh gburdell3@login-ice.pace.gatech.edu
+ssh rtulsyan3@login-ice.pace.gatech.edu
 ```
 
 ## Managing source files

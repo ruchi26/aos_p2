@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH -J cs6210-proj2
+#SBATCH -J cs6210-proj2-combined-2
 #SBATCH -N 2 --ntasks-per-node=1 --cpus-per-task=2
 #SBATCH --mem-per-cpu=1G
 #SBATCH -t 5

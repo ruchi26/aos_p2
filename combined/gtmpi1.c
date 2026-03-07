@@ -33,8 +33,8 @@ void gtmpi_barrier(){
 
     // //adding random delays based on rank to check the barrier (all of them should leave only after the last process's entry time)
     // usleep(my_rank * 200 * 1000);   
-    double t_enter = MPI_Wtime();
-    fprintf(stderr, "[%d] before barrier at %.6f\n", my_rank, t_enter);
+    // double t_enter = MPI_Wtime();
+    // fprintf(stderr, "[%d] before barrier at %.6f\n", my_rank, t_enter);
 
     for (round = 0; round < num_rounds; round++) {
         distance = 1 << round;
@@ -50,9 +50,9 @@ void gtmpi_barrier(){
                     MPI_COMM_WORLD, &status);
     }
 
-    double t_leave = MPI_Wtime();
-    fprintf(stderr, "[%d] after barrier at %.6f\n",
-            my_rank, t_leave);
+    // double t_leave = MPI_Wtime();
+    // fprintf(stderr, "[%d] after barrier at %.6f\n",
+    //         my_rank, t_leave);
 }
 
 void gtmpi_finalize(){

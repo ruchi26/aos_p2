@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #SBATCH -J cs6210-proj2
-#SBATCH -N 2 --ntasks-per-node=1 --cpus-per-task=2
+#SBATCH -N 6 --ntasks-per-node=1 --cpus-per-task=2
 #SBATCH --mem-per-cpu=1G
 #SBATCH -t 5
 #SBATCH -q coc-ice
-#SBATCH -o combined-2-2.out
+#SBATCH -o combined-6-2.out
 
 echo "Started on `/bin/hostname`"
 
