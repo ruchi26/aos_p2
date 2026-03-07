@@ -51,7 +51,7 @@ int main(int argc, char** argv)
         double t1 = MPI_Wtime();
         // gettimeofday(&time_end, NULL);
         // total_time = total_time + ((double)(time_end.tv_sec * 1000000) + time_end.tv_usec) - ((double)(time_start.tv_sec * 1000000) + time_start.tv_usec);
-        total_time = t1 - t0;
+        total_time += t1 - t0;
         if (total_time > max_total_time) {
             max_total_time = total_time;
         }

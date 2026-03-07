@@ -1,0 +1,38 @@
+---------------------------------------
+Begin Slurm Prolog: Mar-07-2026 17:38:56
+Job ID:    4265880
+User ID:   rtulsyan3
+Account:   coc
+Job name:  cs6210-proj
+Partition: coc-cpu
+QOS:       coc-ice
+---------------------------------------
+Started on atl1-1-02-012-5-1.pace.gatech.edu
+Number of threads 2, number of processes 8, avg time 0.000121949
+Number of threads 2, number of processes 8, max time 0.012194872
+Number of threads 2, number of processes 8, avg time 0.000121922
+Number of threads 2, number of processes 8, max time 0.012192249
+Number of threads 2, number of processes 8, avg time 0.000121589
+Number of threads 2, number of processes 8, max time 0.012158871
+Number of threads 2, number of processes 8, avg time 0.000121944
+Number of threads 2, number of processes 8, max time 0.012194395
+Number of threads 2, number of processes 8, avg time 0.000121939
+Number of threads 2, number of processes 8, max time 0.012193918
+Number of threads 2, number of processes 8, avg time 0.000121942
+Number of threads 2, number of processes 8, max time 0.012194157
+Number of threads 2, number of processes 8, avg time 0.000121953
+Number of threads 2, number of processes 8, max time 0.012195349
+Number of threads 2, number of processes 8, avg time 0.000121937
+Number of threads 2, number of processes 8, max time 0.012193680
+---------------------------------------
+Begin Slurm Epilog: Mar-07-2026 17:38:58
+Job ID:        4265880
+User ID:       rtulsyan3
+Account:       coc
+Job name:      cs6210-proj
+Resources:     cpu=16,mem=16G,node=8
+Rsrc Used:     cput=00:00:32,vmem=0,walltime=00:00:02,mem=14156K,energy_used=0
+Partition:     coc-cpu
+QOS:           coc-ice
+Nodes:         atl1-1-02-012-5-[1-2],atl1-1-02-012-6-[1-2],atl1-1-02-012-7-[1-2],atl1-1-02-012-8-[1-2]
+---------------------------------------
