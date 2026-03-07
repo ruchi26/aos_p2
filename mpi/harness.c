@@ -18,6 +18,7 @@ int main(int argc, char** argv)
   }
 
   num_processes = strtol(argv[1], NULL, 10);
+  num_rounds = strtol(argv[2], NULL, 10);
 
   gtmpi_init(num_processes);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
@@ -47,7 +48,7 @@ int main(int argc, char** argv)
     if (latency > lat_max) lat_max = latency;
 
     wait_sum += wait_before_barrier;
-    if (wait_before_barrier < wait_min)cd  wait_min = wait_before_barrier;
+    if (wait_before_barrier < wait_min) wait_min = wait_before_barrier;
     if (wait_before_barrier > wait_max) wait_max = wait_before_barrier;
   }
 
