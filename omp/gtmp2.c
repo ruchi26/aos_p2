@@ -22,6 +22,7 @@ struct tree_t {
 };
 
 struct tree_node_t** entry_arr;
+int num_threads_global;
 
 // double* time_measurement;
 int epochs;
@@ -31,6 +32,7 @@ void gtmp_init(int num_threads) {
         printf("Invalid number of threads\n");
         exit(1);
     }
+    num_threads_global = num_threads;
     entry_arr = calloc(num_threads, sizeof(struct tree_node_t*));
     struct tree_node_t* curr_parent;
     for (int i = 0; i < num_threads; i++) {
@@ -73,13 +75,12 @@ void gtmp_init(int num_threads) {
         }
     }
     // printf("children[0] %d children[1] %d children[2] %d children[3] %d\n", entry_arr[0]->children[0], entry_arr[0]->children[1], entry_arr[0]->children[2], entry_arr[0]->children[3]);
-    // time_measurement = malloc(num_threads * 100 * sizeof(double));
+    // time_measurement = calloc(num_threads * 100, sizeof(double));
 }
 
 void gtmp_barrier() {
-    //  struct timeval time_curr_start;
-    //  struct timeval time_curr_end;
-    //  gettimeofday(&time_curr_start, NULL);
+     // struct timeval time_curr_finish;
+     // double measure;
      struct tree_node_t* my_node = entry_arr[omp_get_thread_num()];
      assert(my_node != NULL);
      if (my_node->num_children == 0) {
@@ -109,7 +110,6 @@ void gtmp_barrier() {
             my_node->sense = !(my_node->sense);
             // my_node->count = my_node->num_children;
         }
-
      }
      else {
         int check = ((my_node->num_children < 1) || (my_node->children[0] == 1)) && ((my_node->num_children < 2) || (my_node->children[1] == 1)) && ((my_node->num_children < 3) || (my_node->children[2] == 1)) && ((my_node->num_children < 4) || (my_node->children[3] == 1));
@@ -135,26 +135,50 @@ void gtmp_barrier() {
             // my_node->count = my_node->num_children;
         }
      }
-    // gettimeofday(&time_curr_end, NULL);
-    // // time_measurement = ((double)(time_curr_end.tv_sec * 1000000) + time_curr_end.tv_usec) - ((double)(time_curr_start.tv_sec * 1000000) + time_curr_start.tv_usec);
-    // time_measurement[(omp_get_num_threads() * (epochs - 1)) + omp_get_thread_num()] = ((double)(time_curr_end.tv_sec * 1000000) + time_curr_end.tv_usec) - ((double)(time_curr_start.tv_sec * 1000000) + time_curr_start.tv_usec);
+    // gettimeofday(&time_curr_finish, NULL);
+    // measure = ((double)(time_curr_end.tv_sec * 1000000) + time_curr_end.tv_usec) - ((double)(time_curr_start.tv_sec * 1000000) + time_curr_start.tv_usec);
+    // time_measurement[(omp_get_num_threads() * (epochs - 1)) + omp_get_thread_num()] = (double)(time_curr_finish.tv_sec * 1000000) + time_curr_finish.tv_usec;
+    // printf("measure for thread %d is %.9f\n", omp_get_thread_num(), measure);
 }
 
 void gtmp_finalize() {
-    for (int i = 0; i < omp_get_num_threads(); i++) {
+    for (int i = 0; i < num_threads_global; i++) {
         free(entry_arr[i]);
     }
     // double final_val = 0;
+    // int adds = 0;
     // double min = __DBL_MAX__;
-    // for (int i = 0; i < 10; i++) {
+    // for (int i = 0; i < 100; i++) {
     //     for (int j = 0; j < omp_get_num_threads(); j++) {
     //         if (min > time_measurement[(omp_get_num_threads() * i) + j]) {
     //             min = time_measurement[(omp_get_num_threads() * i) + j];
     //         }
     //     }
+    //     if (min > 100.0) {
+    //         continue;
+    //     }
+    //     adds = adds + 1;
     //     final_val = final_val + min;
     // }
-    // printf("min avg is %.9f\n", final_val/100);
+    // printf("min avg is %.9f with adds %d\n", final_val/adds, adds);
+    // double curr_val = 0.0;
+    // double variance = 0.0;
+    // double total_variance = 0.0;
+    // for (int i = 0; i < 100; i++) {
+    //     for (int j = 0; j < num_threads_global; j++) {
+    //         // printf("thread %d %.9f\n", j, time_measurement[(num_threads_global * i) + j]);
+    //         curr_val = curr_val + time_measurement[(num_threads_global * i) + j];
+    //     }
+    //     curr_val = curr_val/num_threads_global;
+    //     for (int j = 0; j < num_threads_global; j++) {
+    //         variance = fabs((time_measurement[(num_threads_global * i) + j] - curr_val));
+    //     }
+    //     variance = variance/num_threads_global;
+    //     total_variance = total_variance + variance;
+    //     curr_val = 0.0;
+    //     variance = 0.0;
+    // }
+    // printf("variance is %.9f\n", total_variance/100);
     // free(time_measurement);
 }
 
