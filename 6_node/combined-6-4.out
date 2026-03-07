@@ -1,0 +1,24 @@
+---------------------------------------
+Begin Slurm Prolog: Mar-07-2026 18:01:53
+Job ID:    4266483
+User ID:   rtulsyan3
+Account:   coc
+Job name:  cs6210-proj2-combined-4
+Partition: coc-cpu
+QOS:       coc-ice
+---------------------------------------
+Started on atl1-1-01-005-2-1.pace.gatech.edu
+[AVG]Number of threads 4, number of processes 6, avg time 0.000076198
+[MAX]Number of threads 4, number of processes 6, max time 0.007626295
+---------------------------------------
+Begin Slurm Epilog: Mar-07-2026 18:01:55
+Job ID:        4266483
+User ID:       rtulsyan3
+Account:       coc
+Job name:      cs6210-proj2-combined-4
+Resources:     cpu=24,mem=24G,node=6
+Rsrc Used:     cput=00:00:48,vmem=0,walltime=00:00:02,mem=13876K,energy_used=0
+Partition:     coc-cpu
+QOS:           coc-ice
+Nodes:         atl1-1-01-005-2-[1-2],atl1-1-01-005-3-[1-2],atl1-1-01-005-4-[1-2]
+---------------------------------------
