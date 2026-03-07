@@ -1,0 +1,27 @@
+---------------------------------------
+Begin Slurm Prolog: Mar-07-2026 03:11:22
+Job ID:    4252796
+User ID:   psahu30
+Account:   coc
+Job name:  cs6210-proj2-mphello
+Partition: coc-cpu
+QOS:       coc-ice
+---------------------------------------
+Started on atl1-1-02-010-6-1.pace.gatech.edu
+num_threads is 2
+avg for thread 0 is 0.430400000
+avg for thread 1 is 0.431100000
+avg for thread 0 is 0.333900000
+avg for thread 1 is 0.334100000
+---------------------------------------
+Begin Slurm Epilog: Mar-07-2026 03:11:23
+Job ID:        4252796
+User ID:       psahu30
+Account:       coc
+Job name:      cs6210-proj2-mphello
+Resources:     cpu=2,mem=2G,node=1
+Rsrc Used:     cput=00:00:02,vmem=0,walltime=00:00:01,mem=10284K,energy_used=0
+Partition:     coc-cpu
+QOS:           coc-ice
+Nodes:         atl1-1-02-010-6-1
+---------------------------------------

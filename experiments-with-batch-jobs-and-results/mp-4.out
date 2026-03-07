@@ -1,0 +1,23 @@
+---------------------------------------
+Begin Slurm Prolog: Mar-06-2026 22:05:14
+Job ID:    4245839
+User ID:   psahu30
+Account:   coc
+Job name:  cs6210-proj2-mphello
+Partition: coc-cpu
+QOS:       coc-ice
+---------------------------------------
+Started on atl1-1-02-003-19-1.pace.gatech.edu
+[2026-03-06T22:10:41.003] error: *** JOB 4245839 ON atl1-1-02-003-19-1 CANCELLED AT 2026-03-06T22:10:41 DUE TO TIME LIMIT ***
+---------------------------------------
+Begin Slurm Epilog: Mar-06-2026 22:10:43
+Job ID:        4245839
+User ID:       psahu30
+Account:       coc
+Job name:      cs6210-proj2-mphello
+Resources:     cpu=4,mem=4G,node=1
+Rsrc Used:     cput=00:21:44,vmem=0,walltime=00:05:26,mem=10448K,energy_used=0
+Partition:     coc-cpu
+QOS:           coc-ice
+Nodes:         atl1-1-02-003-19-1
+---------------------------------------

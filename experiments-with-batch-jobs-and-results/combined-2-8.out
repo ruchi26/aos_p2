@@ -1,0 +1,26 @@
+---------------------------------------
+Begin Slurm Prolog: Mar-07-2026 16:09:35
+Job ID:    4263626
+User ID:   psahu30
+Account:   coc
+Job name:  cs6210-proj2-combined-8
+Partition: coc-cpu
+QOS:       coc-ice
+---------------------------------------
+Started on atl1-1-02-010-1-1.pace.gatech.edu
+Number of threads 8, number of processes 2, avg. time 121.970000000
+Number of threads 8, number of processes 2, avg. time 12197.000000000
+Number of threads 8, number of processes 2, avg. time 121.900000000
+Number of threads 8, number of processes 2, avg. time 12190.000000000
+---------------------------------------
+Begin Slurm Epilog: Mar-07-2026 16:09:38
+Job ID:        4263626
+User ID:       psahu30
+Account:       coc
+Job name:      cs6210-proj2-combined-8
+Resources:     cpu=16,mem=16G,node=2
+Rsrc Used:     cput=00:00:48,vmem=0,walltime=00:00:03,mem=15168K,energy_used=0
+Partition:     coc-cpu
+QOS:           coc-ice
+Nodes:         atl1-1-02-010-1-[1-2]
+---------------------------------------

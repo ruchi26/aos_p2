@@ -1,0 +1,47 @@
+---------------------------------------
+Begin Slurm Prolog: Mar-07-2026 03:13:54
+Job ID:    4252802
+User ID:   psahu30
+Account:   coc
+Job name:  cs6210-proj2-mphello
+Partition: coc-cpu
+QOS:       coc-ice
+---------------------------------------
+Started on atl1-1-01-005-1-1.pace.gatech.edu
+num_threads is 12
+avg for thread 5 is 9.326700000
+avg for thread 3 is 9.330000000
+avg for thread 6 is 9.325200000
+avg for thread 11 is 9.327500000
+avg for thread 7 is 9.329400000
+avg for thread 1 is 9.326100000
+avg for thread 9 is 9.326400000
+avg for thread 2 is 9.328000000
+avg for thread 8 is 9.327700000
+avg for thread 4 is 9.325700000
+avg for thread 10 is 9.328000000
+avg for thread 0 is 9.325200000
+avg for thread 10 is 4.328800000
+avg for thread 0 is 4.327100000
+avg for thread 5 is 4.328000000
+avg for thread 8 is 4.326400000
+avg for thread 9 is 4.329300000
+avg for thread 2 is 4.330300000
+avg for thread 3 is 4.326100000
+avg for thread 11 is 4.328900000
+avg for thread 1 is 4.328900000
+avg for thread 6 is 4.326200000
+avg for thread 7 is 4.326900000
+avg for thread 4 is 4.332200000
+---------------------------------------
+Begin Slurm Epilog: Mar-07-2026 03:13:55
+Job ID:        4252802
+User ID:       psahu30
+Account:       coc
+Job name:      cs6210-proj2-mphello
+Resources:     cpu=12,mem=12G,node=1
+Rsrc Used:     cput=00:00:12,vmem=0,walltime=00:00:01,mem=11424K,energy_used=0
+Partition:     coc-cpu
+QOS:           coc-ice
+Nodes:         atl1-1-01-005-1-1
+---------------------------------------
