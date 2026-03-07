@@ -36,6 +36,7 @@ int main(int argc, char** argv)
     struct timeval time_start;
     struct timeval time_end;
     double total_time;
+    double max_total_time = 0.0;
     for (int j = 0; j < num_iter; j++) {
         gettimeofday(&time_start, NULL);
         #pragma omp parallel
@@ -48,9 +49,13 @@ int main(int argc, char** argv)
         gtmpi_barrier();
         gettimeofday(&time_end, NULL);
         total_time = total_time + ((double)(time_end.tv_sec * 1000000) + time_end.tv_usec) - ((double)(time_start.tv_sec * 1000000) + time_start.tv_usec);
+        if (total_time > max_total_time) {
+            max_total_time = total_time;
+        }
     }
 
     printf("Number of threads %d, number of processes %d, avg. time %.9f\n", num_threads, totalProcessCount, total_time/num_iter);
+    printf("Number of threads %d, number of processes %d, avg. time %.9f\n", num_threads, totalProcessCount, max_total_time);
     gtmp_finalize();
 
     gtmpi_finalize();  
