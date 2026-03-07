@@ -56,9 +56,20 @@ int main(int argc, char** argv)
             max_total_time = total_time;
         }
     }
+    double g_lat_sum = 0.0, g_lat_max = 0.0;
+    MPI_Reduce(&total_time, &g_lat_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Reduce(&max_total_time, &g_lat_max, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
+    
+    if (my_rank == 0) {
+        
+        // Average per barrier over all ranks
+        double avg_latency = g_lat_sum / totalProcessCount / num_iter;
 
-    printf("Number of threads %d, number of processes %d, avg time %.9f\n", num_threads, totalProcessCount, total_time/num_iter);
-    printf("Number of threads %d, number of processes %d, max time %.9f\n", num_threads, totalProcessCount, max_total_time);
+        printf("[AVG]Number of threads %d, number of processes %d, avg time %.9f\n", num_threads, totalProcessCount, avg_latency);
+        printf("[MAX]Number of threads %d, number of processes %d, max time %.9f\n", num_threads, totalProcessCount, g_lat_max);
+        fflush(stdout);
+    }
+    
     gtmp_finalize();
 
     gtmpi_finalize();  
